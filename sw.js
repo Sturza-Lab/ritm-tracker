@@ -1,4 +1,4 @@
-const CACHE = "ritm-shell-v4";
+const CACHE = "ritm-shell-v5";
 const ASSETS = ["./", "./index.html", "./styles.css", "./app.js", "./tracker-core.js", "./manifest.webmanifest", "./icon.svg"];
 
 self.addEventListener("install", (event) => {

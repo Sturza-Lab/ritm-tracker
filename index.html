@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#f3eee4">
+  <meta name="theme-color" content="#f8edf0">
   <meta name="description" content="Личный дневник энергии, настроения и ритмов">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="icon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;family=Prata&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&amp;family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <title>Ритм</title>
 </head>
@@ -18,9 +18,22 @@
   <div class="ambient" aria-hidden="true"></div>
   <main class="shell">
     <header class="topbar">
-      <div>
-        <span class="eyebrow">личный трекер</span>
-        <h1>Ритм</h1>
+      <div class="brand-lockup">
+        <div>
+          <span class="eyebrow">личный дневник ритмов</span>
+          <h1>Ритм<span class="title-petal">✽</span></h1>
+          <p>бережно замечать себя</p>
+        </div>
+        <div class="cat-companion" aria-label="Кот-компаньон">
+          <span class="cat-halo"></span>
+          <svg viewBox="0 0 150 130" role="img" aria-hidden="true">
+            <path class="cat-fill" d="M37 95c-8-22 3-45 21-55l-2-20 18 12c9-2 18-1 26 3l17-13-1 24c11 13 15 31 8 47-9 23-32 29-52 26-18-2-29-10-35-24Z"/>
+            <path class="cat-line" d="M37 95c-8-22 3-45 21-55l-2-20 18 12c9-2 18-1 26 3l17-13-1 24c11 13 15 31 8 47-9 23-32 29-52 26-18-2-29-10-35-24Z"/>
+            <path class="cat-line face" d="M70 66c2 2 5 2 7 0m19 0c2 2 5 2 7 0M82 78c4 3 8 3 12 0m-6-3v4M56 76l-21-4m22 12-23 5m76-13 22-5m-23 13 22 5"/>
+            <path class="cat-line tail" d="M118 96c22 1 25-23 12-28-9-3-13 7-7 13"/>
+          </svg>
+          <span class="cat-note">я рядом</span>
+        </div>
       </div>
       <button class="icon-button" id="installButton" hidden aria-label="Установить на телефон">↓</button>
     </header>
@@ -34,6 +47,7 @@
 
       <form id="checkinForm">
         <section class="hero-card">
+          <span class="hero-kicker">моя точка в этом дне</span>
           <p class="question">Как прошёл этот день?</p>
           <div class="mood-scale" role="radiogroup" aria-label="Общая оценка дня">
             <label><input type="radio" name="dayScore" value="1" required><span>◔<small>тяжело</small></span></label>
@@ -76,7 +90,7 @@
         </details>
 
         <button class="save-button" type="submit"><span id="saveLabel">Сохранить день</span><b>→</b></button>
-        <p class="privacy-note">Запись останется только на этом устройстве</p>
+        <p class="privacy-note"><span>♡</span> Запись останется только на этом устройстве</p>
       </form>
     </section>
 
