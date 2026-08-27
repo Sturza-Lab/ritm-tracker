@@ -1,4 +1,4 @@
-import { STORAGE_KEY, analyzeEntries, average, entriesToCsv, escapeHtml, filterByDays, formatShareText, getIndices, upsertEntry } from "./tracker-core.js";
+import { STORAGE_KEY, analyzeEntries, average, entriesToCsv, escapeHtml, filterByDays, formatShareText, getIndices, upsertEntry } from "./tracker-core.js?v=6";
 
 const positiveFactors = ["полноценный сон", "движение", "прогулка", "дневной свет", "тишина", "творчество", "приятное общение", "время наедине", "порядок", "природа"];
 const negativeFactors = ["недосып", "конфликт", "стресс", "перегруз", "болезнь", "поездка", "алкоголь", "инфошум", "много общения", "неопределённость"];
