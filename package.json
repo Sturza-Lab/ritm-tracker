@@ -1,0 +1,9 @@
+{
+  "name": "lichnyy-treker-sostoyaniya",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test",
+    "check": "node --check app.js && node --check tracker-core.js && node --check sw.js"
+  }
+}

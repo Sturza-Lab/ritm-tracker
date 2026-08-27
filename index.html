@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f3eee4">
+  <meta name="description" content="Личный дневник энергии, настроения и ритмов">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;family=Prata&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <title>Ритм</title>
+</head>
+<body>
+  <div class="ambient" aria-hidden="true"></div>
+  <main class="shell">
+    <header class="topbar">
+      <div>
+        <span class="eyebrow">личный трекер</span>
+        <h1>Ритм</h1>
+      </div>
+      <button class="icon-button" id="installButton" hidden aria-label="Установить на телефон">↓</button>
+    </header>
+
+    <section class="view active" id="checkinView" data-view="checkin">
+      <div class="date-row">
+        <button class="date-step" data-date-step="-1" aria-label="Предыдущий день">‹</button>
+        <label class="date-label"><span id="prettyDate"></span><input id="entryDate" type="date"></label>
+        <button class="date-step" data-date-step="1" aria-label="Следующий день">›</button>
+      </div>
+
+      <form id="checkinForm">
+        <section class="hero-card">
+          <p class="question">Как прошёл этот день?</p>
+          <div class="mood-scale" role="radiogroup" aria-label="Общая оценка дня">
+            <label><input type="radio" name="dayScore" value="1" required><span>◔<small>тяжело</small></span></label>
+            <label><input type="radio" name="dayScore" value="2"><span>◑<small>ниже</small></span></label>
+            <label><input type="radio" name="dayScore" value="3"><span>●<small>ровно</small></span></label>
+            <label><input type="radio" name="dayScore" value="4"><span>◐<small>выше</small></span></label>
+            <label><input type="radio" name="dayScore" value="5"><span>◕<small>подъём</small></span></label>
+          </div>
+        </section>
+
+        <section class="form-section">
+          <div class="section-heading"><span>01</span><div><h2>Внутри</h2><p>Настроение и внутренний фон</p></div></div>
+          <div class="metric" data-metric="mood" data-low="тяжесть" data-high="лёгкость"><label>Настроение <output>3</output></label><input type="range" name="mood" min="1" max="5" value="3"></div>
+          <div class="metric" data-metric="calm" data-low="напряжение" data-high="спокойствие"><label>Спокойствие <output>3</output></label><input type="range" name="calm" min="1" max="5" value="3"></div>
+        </section>
+
+        <section class="form-section">
+          <div class="section-heading"><span>02</span><div><h2>Энергия</h2><p>Как менялся заряд за день</p></div></div>
+          <div class="energy-grid">
+            <label>Утро<input type="range" name="energyMorning" min="1" max="5" value="3"><output>3</output></label>
+            <label>День<input type="range" name="energyDay" min="1" max="5" value="3"><output>3</output></label>
+            <label>Вечер<input type="range" name="energyEvening" min="1" max="5" value="3"><output>3</output></label>
+          </div>
+          <div class="metric" data-low="не отдохнула" data-high="восстановилась"><label>Восстановление после сна <output>3</output></label><input type="range" name="recovery" min="1" max="5" value="3"></div>
+        </section>
+
+        <section class="form-section">
+          <div class="section-heading"><span>03</span><div><h2>В деле</h2><p>Способность думать и действовать</p></div></div>
+          <div class="metric"><label>Концентрация <output>3</output></label><input type="range" name="focus" min="1" max="5" value="3"></div>
+          <div class="metric"><label>Легкость начала дел <output>3</output></label><input type="range" name="starting" min="1" max="5" value="3"></div>
+          <div class="metric"><label>Телесный комфорт <output>3</output></label><input type="range" name="body" min="1" max="5" value="3"></div>
+          <label class="select-field"><span>Нагрузка</span><select name="load"><option value="1">Низкая</option><option value="2" selected>Нормальная</option><option value="3">Высокая</option><option value="4">Чрезмерная</option></select></label>
+        </section>
+
+        <details class="optional">
+          <summary><span>Что повлияло</span><small>по желанию</small></summary>
+          <div class="chips" id="factorChips"></div>
+          <label class="note-field"><span>Одна фраза о дне</span><textarea name="note" rows="3" maxlength="280" placeholder="Что дало или забрало ресурс?"></textarea></label>
+          <label class="note-field journal-field"><span>Личная запись <small>до 5000 знаков</small></span><textarea name="journal" rows="7" maxlength="5000" placeholder="Мысли, наблюдения, события - всё, что хочется сохранить"></textarea></label>
+        </details>
+
+        <button class="save-button" type="submit"><span id="saveLabel">Сохранить день</span><b>→</b></button>
+        <p class="privacy-note">Запись останется только на этом устройстве</p>
+      </form>
+    </section>
+
+    <section class="view" id="historyView" data-view="history">
+      <div class="page-intro"><span class="eyebrow">день за днём</span><h2>История</h2><p id="historySummary"></p></div>
+      <div class="history-list" id="historyList"></div>
+    </section>
+
+    <section class="view" id="trendsView" data-view="trends">
+      <div class="page-intro"><span class="eyebrow">ваши закономерности</span><h2>Ритмы</h2></div>
+      <div class="period-tabs" id="periodTabs"><button data-period="7">7 дней</button><button class="active" data-period="30">30</button><button data-period="90">90</button><button data-period="365">Год</button></div>
+      <div class="insight-card" id="insightCard"></div>
+      <section class="chart-card"><div class="chart-head"><h3>Динамика</h3><span>0-100</span></div><div class="chart" id="trendChart"></div><div class="legend"><i class="mood-dot"></i>настроение <i class="energy-dot"></i>энергия</div></section>
+      <div class="stats-grid" id="statsGrid"></div>
+      <section class="data-card"><h3>Ваши данные</h3><p>Сделайте копию, чтобы не потерять историю при смене телефона</p><div class="data-actions"><button id="exportCsv">Экспорт CSV</button><button id="backupJson">Копия JSON</button><label>Восстановить<input id="restoreJson" type="file" accept="application/json"></label></div></section>
+    </section>
+  </main>
+
+  <nav class="bottom-nav" aria-label="Основная навигация">
+    <button class="active" data-target="checkin"><span>○</span>Сегодня</button>
+    <button data-target="history"><span>≡</span>История</button>
+    <button data-target="trends"><span>∿</span>Ритмы</button>
+  </nav>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
