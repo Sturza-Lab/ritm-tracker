@@ -1,5 +1,5 @@
 const CACHE = "ritm-shell-v5";
-const ASSETS = ["./", "./index.html", "./styles.css", "./app.js", "./tracker-core.js", "./manifest.webmanifest", "./icon.svg"];
+const ASSETS = ["./", "./index.html", "./styles.css?v=5", "./app.js?v=5", "./tracker-core.js", "./manifest.webmanifest", "./icon.svg"];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(ASSETS)));
