@@ -11,7 +11,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&amp;family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=5">
+  <link rel="stylesheet" href="styles.css?v=6">
+  <link rel="stylesheet" href="analytics.css?v=1">
   <title>Ритм</title>
 </head>
 <body>
@@ -62,6 +63,9 @@
           <div class="section-heading"><span>01</span><div><h2>Внутри</h2><p>Настроение и внутренний фон</p></div></div>
           <div class="metric" data-metric="mood" data-low="тяжесть" data-high="лёгкость"><label>Настроение <output>3</output></label><input type="range" name="mood" min="1" max="5" value="3"></div>
           <div class="metric" data-metric="calm" data-low="напряжение" data-high="спокойствие"><label>Спокойствие <output>3</output></label><input type="range" name="calm" min="1" max="5" value="3"></div>
+          <div class="metric"><label>Тревога <output>3</output></label><input type="range" name="anxiety" min="1" max="5" value="3"></div>
+          <div class="metric"><label>Раздражение <output>3</output></label><input type="range" name="irritation" min="1" max="5" value="3"></div>
+          <div class="metric"><label>Интерес к жизни <output>3</output></label><input type="range" name="interest" min="1" max="5" value="3"></div>
         </section>
 
         <section class="form-section">
@@ -72,19 +76,30 @@
             <label>Вечер<input type="range" name="energyEvening" min="1" max="5" value="3"><output>3</output></label>
           </div>
           <div class="metric" data-low="не отдохнула" data-high="восстановилась"><label>Восстановление после сна <output>3</output></label><input type="range" name="recovery" min="1" max="5" value="3"></div>
+          <div class="split-fields"><label class="select-field"><span>Часов сна</span><input name="sleepHours" type="number" min="0" max="16" step="0.5" inputmode="decimal" placeholder="7.5"></label><label class="select-field"><span>Качество сна</span><select name="sleepQuality"><option value="">Не указывать</option><option value="1">Очень плохое</option><option value="2">Плохое</option><option value="3">Среднее</option><option value="4">Хорошее</option><option value="5">Отличное</option></select></label></div>
         </section>
 
         <section class="form-section">
           <div class="section-heading"><span>03</span><div><h2>В деле</h2><p>Способность думать и действовать</p></div></div>
           <div class="metric"><label>Концентрация <output>3</output></label><input type="range" name="focus" min="1" max="5" value="3"></div>
           <div class="metric"><label>Легкость начала дел <output>3</output></label><input type="range" name="starting" min="1" max="5" value="3"></div>
+          <div class="metric"><label>Завершение дел <output>3</output></label><input type="range" name="completion" min="1" max="5" value="3"></div>
+          <div class="metric"><label>Творческое мышление <output>3</output></label><input type="range" name="creativity" min="1" max="5" value="3"></div>
+          <div class="metric"><label>Ресурс на общение <output>3</output></label><input type="range" name="social" min="1" max="5" value="3"></div>
           <div class="metric"><label>Телесный комфорт <output>3</output></label><input type="range" name="body" min="1" max="5" value="3"></div>
+          <div class="metric"><label>Боль или дискомфорт <output>3</output></label><input type="range" name="pain" min="1" max="5" value="3"></div>
+          <div class="metric"><label>Аппетит <output>3</output></label><input type="range" name="appetite" min="1" max="5" value="3"></div>
+          <div class="metric"><label>Пищеварение <output>3</output></label><input type="range" name="digestion" min="1" max="5" value="3"></div>
           <label class="select-field"><span>Нагрузка</span><select name="load"><option value="1">Низкая</option><option value="2" selected>Нормальная</option><option value="3">Высокая</option><option value="4">Чрезмерная</option></select></label>
         </section>
 
         <details class="optional">
           <summary><span>Что повлияло</span><small>по желанию</small></summary>
-          <div class="chips" id="factorChips"></div>
+          <div class="split-fields context-fields"><label class="select-field"><span>Тип дня</span><select name="dayType"><option value="work">Рабочий</option><option value="weekend">Выходной</option><option value="vacation">Отпуск</option><option value="travel">Поездка</option></select></label><label class="select-field"><span>День цикла</span><input name="cycleDay" type="number" min="1" max="60" inputmode="numeric" placeholder="по желанию"></label></div>
+          <label class="toggle-field"><input type="checkbox" name="illness"><span>Болезнь или недомогание</span></label>
+          <p class="factor-title">Что дало ресурс</p><div class="chips" id="positiveFactorChips"></div>
+          <p class="factor-title">Что забрало ресурс</p><div class="chips" id="negativeFactorChips"></div>
+          <div class="split-fields"><label class="note-field"><span>Главный источник ресурса</span><textarea name="resourceNote" rows="2" maxlength="180" placeholder="Что помогло?"></textarea></label><label class="note-field"><span>Главный источник спада</span><textarea name="drainNote" rows="2" maxlength="180" placeholder="Что истощило?"></textarea></label></div>
           <label class="note-field"><span>Одна фраза о дне</span><textarea name="note" rows="3" maxlength="280" placeholder="Что дало или забрало ресурс?"></textarea></label>
           <label class="note-field journal-field"><span>Личная запись <small>до 5000 знаков</small></span><textarea name="journal" rows="7" maxlength="5000" placeholder="Мысли, наблюдения, события - всё, что хочется сохранить"></textarea></label>
         </details>
@@ -105,6 +120,8 @@
       <div class="insight-card" id="insightCard"></div>
       <section class="chart-card"><div class="chart-head"><h3>Динамика</h3><span>0-100</span></div><div class="chart" id="trendChart"></div><div class="legend"><i class="mood-dot"></i>настроение <i class="energy-dot"></i>энергия</div></section>
       <div class="stats-grid" id="statsGrid"></div>
+      <section class="analysis-card"><div class="chart-head"><h3>Личные закономерности</h3><span id="coverageBadge"></span></div><div id="patternsList" class="patterns-list"></div></section>
+      <section class="analysis-card"><div class="chart-head"><h3>Ритм по месяцам</h3><span>среднее</span></div><div id="monthRhythm" class="month-rhythm"></div></section>
       <section class="data-card"><h3>Ваши данные</h3><p>Сделайте копию, чтобы не потерять историю при смене телефона</p><div class="data-actions"><button id="exportCsv">Экспорт CSV</button><button id="backupJson">Копия JSON</button><label>Восстановить<input id="restoreJson" type="file" accept="application/json"></label></div></section>
     </section>
   </main>
@@ -115,6 +132,6 @@
     <button data-target="trends"><span>∿</span>Ритмы</button>
   </nav>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
-  <script type="module" src="app.js?v=5"></script>
+  <script type="module" src="app.js?v=6"></script>
 </body>
 </html>

@@ -1,0 +1,21 @@
+.select-field input {
+  width: 100%; border: 1px solid var(--line); border-radius: 16px 8px 16px 16px;
+  background: rgba(255,250,246,.88); padding: 13px; color: var(--cocoa); font: 500 13px/1.55 "Manrope"
+}
+.split-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 16px }
+.context-fields { margin: 20px 0 12px }
+.toggle-field { display: flex; align-items: center; gap: 9px; margin: 14px 0; font-size: 11px; font-weight: 600 }
+.toggle-field input { accent-color: var(--rose); width: 18px; height: 18px }
+.factor-title { margin: 20px 0 -10px; font: 600 17px "Cormorant Garamond", serif }
+.analysis-card { background: var(--card); border: 1px solid rgba(255,255,255,.7); border-radius: 26px 10px 26px 26px; padding: 20px; margin: 14px 0; box-shadow: 0 10px 30px rgba(113,76,87,.06) }
+.patterns-list { display: grid; gap: 9px; margin-top: 15px }
+.patterns-list article { padding: 14px; background: rgba(243,223,228,.38); border-radius: 16px 7px 16px 16px }
+.patterns-list b, .patterns-list span { display: block }
+.patterns-list b { font: 600 17px "Cormorant Garamond", serif; margin-bottom: 4px }
+.patterns-list span { font-size: 10px; line-height: 1.55; color: var(--muted) }
+.month-rhythm { display: grid; gap: 9px; margin-top: 16px }
+.month-rhythm > div { display: grid; grid-template-columns: 42px 1fr 28px; align-items: center; gap: 8px; font-size: 9px; color: var(--muted) }
+.month-rhythm i { height: 5px; background: var(--line); border-radius: 5px; overflow: hidden }
+.month-rhythm i b { display: block; height: 100%; background: linear-gradient(90deg,var(--sage),var(--rose)); border-radius: 5px }
+.month-rhythm strong { font-size: 10px; color: var(--cocoa) }
+@media (max-width: 420px) { .split-fields { grid-template-columns: 1fr } }
