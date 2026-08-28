@@ -1,5 +1,7 @@
-const CACHE = "ritm-shell-v6";
-const ASSETS = ["./", "./index.html", "./styles.css?v=6", "./analytics.css?v=1", "./app.js?v=6", "./tracker-core.js?v=6", "./manifest.webmanifest", "./icon.svg"];
+importScripts("https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.sw.js");
+
+const CACHE = "ritm-shell-v7";
+const ASSETS = ["./", "./index.html", "./styles.css?v=6", "./analytics.css?v=2", "./app.js?v=7", "./tracker-core.js?v=6", "./reminder-core.js?v=1", "./manifest.webmanifest", "./icon.svg"];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(ASSETS)));

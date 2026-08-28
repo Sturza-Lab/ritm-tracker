@@ -1,4 +1,5 @@
 import { STORAGE_KEY, analyzeEntries, average, entriesToCsv, escapeHtml, filterByDays, formatShareText, getIndices, upsertEntry } from "./tracker-core.js?v=6";
+import { getReminderState, isStandalone } from "./reminder-core.js?v=1";
 
 const positiveFactors = ["полноценный сон", "движение", "прогулка", "дневной свет", "тишина", "творчество", "приятное общение", "время наедине", "порядок", "природа"];
 const negativeFactors = ["недосып", "конфликт", "стресс", "перегруз", "болезнь", "поездка", "алкоголь", "инфошум", "много общения", "неопределённость"];
@@ -6,6 +7,7 @@ const form = document.querySelector("#checkinForm");
 const dateInput = document.querySelector("#entryDate");
 let entries = loadEntries();
 let period = 30;
+let oneSignalSdk = null;
 
 function todayIso() {
   const now = new Date();
@@ -169,8 +171,48 @@ async function shareEntry(entry) {
   }
 }
 
+function reminderEnvironment() {
+  const isIos = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  const standalone = isStandalone(window.matchMedia("(display-mode: standalone)").matches ? "standalone" : "browser", navigator.standalone);
+  return { isIos, standalone };
+}
+
+function renderReminder() {
+  const button = document.querySelector("#reminderToggle");
+  const status = document.querySelector("#reminderStatus");
+  if (!oneSignalSdk) return;
+  const environment = reminderEnvironment();
+  const permission = typeof Notification === "undefined" ? "default" : Notification.permission;
+  const state = getReminderState({ supported: oneSignalSdk.Notifications.isPushSupported(), standalone: environment.standalone, permission, optedIn: oneSignalSdk.User.PushSubscription.optedIn, isIos: environment.isIos });
+  status.textContent = state.label;
+  button.textContent = state.action || "Недоступно";
+  button.disabled = !state.action;
+  button.dataset.state = state.code;
+  document.querySelector("#reminderCard").dataset.state = state.code;
+}
+
+async function toggleReminder() {
+  if (!oneSignalSdk) return;
+  const state = document.querySelector("#reminderToggle").dataset.state;
+  if (state === "install") { toast("Откройте Поделиться → На экран Домой"); return; }
+  if (state === "denied") { toast("Разрешите уведомления в настройках телефона"); return; }
+  try {
+    if (state === "enabled") await oneSignalSdk.User.PushSubscription.optOut();
+    else await oneSignalSdk.User.PushSubscription.optIn();
+    renderReminder();
+  } catch { toast("Не удалось изменить уведомления"); }
+}
+
 document.querySelector("#positiveFactorChips").innerHTML = positiveFactors.map((factor) => `<label><input type="checkbox" name="positive-${factor}"><span>${factor}</span></label>`).join("");
 document.querySelector("#negativeFactorChips").innerHTML = negativeFactors.map((factor) => `<label><input type="checkbox" name="negative-${factor}"><span>${factor}</span></label>`).join("");
+document.querySelector("#reminderToggle").addEventListener("click", toggleReminder);
+window.OneSignalDeferred = window.OneSignalDeferred || [];
+window.OneSignalDeferred.push(function (OneSignal) {
+  oneSignalSdk = OneSignal;
+  OneSignal.User.PushSubscription.addEventListener("change", renderReminder);
+  OneSignal.Notifications.addEventListener("permissionChange", renderReminder);
+  renderReminder();
+});
 dateInput.addEventListener("change", () => setDate(dateInput.value));
 document.querySelectorAll("[data-date-step]").forEach((button) => button.addEventListener("click", () => { const date = new Date(`${dateInput.value}T12:00:00`); date.setDate(date.getDate() + Number(button.dataset.dateStep)); setDate(date.toISOString().slice(0, 10)); }));
 form.addEventListener("input", (event) => { if (event.target.matches('input[type="range"]')) updateOutput(event.target); });

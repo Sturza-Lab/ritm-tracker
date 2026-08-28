@@ -12,7 +12,19 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&amp;family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css?v=6">
-  <link rel="stylesheet" href="analytics.css?v=1">
+  <link rel="stylesheet" href="analytics.css?v=2">
+  <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+  <script>
+    window.OneSignalDeferred = window.OneSignalDeferred || [];
+    OneSignalDeferred.push(async function (OneSignal) {
+      await OneSignal.init({
+        appId: "0444526f-d4a7-43c8-8662-1b81c3fa0b45",
+        serviceWorkerPath: "ritm-tracker/sw.js",
+        serviceWorkerParam: { scope: "/ritm-tracker/" },
+        welcomeNotification: { disable: true }
+      });
+    });
+  </script>
   <title>Ритм</title>
 </head>
 <body>
@@ -104,6 +116,12 @@
           <label class="note-field journal-field"><span>Личная запись <small>до 5000 знаков</small></span><textarea name="journal" rows="7" maxlength="5000" placeholder="Мысли, наблюдения, события - всё, что хочется сохранить"></textarea></label>
         </details>
 
+        <section class="reminder-card" id="reminderCard">
+          <div><span class="reminder-icon">☾</span><div><h3>Вечернее напоминание</h3><p id="reminderStatus">Проверяю доступность уведомлений…</p></div></div>
+          <button type="button" id="reminderToggle" disabled>Подождите</button>
+          <small>OneSignal получает только техническую push-подписку. Записи о состоянии остаются на устройстве</small>
+        </section>
+
         <button class="save-button" type="submit"><span id="saveLabel">Сохранить день</span><b>→</b></button>
         <p class="privacy-note"><span>♡</span> Запись останется только на этом устройстве</p>
       </form>
@@ -132,6 +150,6 @@
     <button data-target="trends"><span>∿</span>Ритмы</button>
   </nav>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
-  <script type="module" src="app.js?v=6"></script>
+  <script type="module" src="app.js?v=7"></script>
 </body>
 </html>
